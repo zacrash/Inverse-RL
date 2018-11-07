@@ -29,8 +29,6 @@ class IRLNet(nn.Module):
     #x = F.relu(self.conv3(x))
     return torch.tensor(x, dtype=torch.double)
 
-# TODO: Here I would ASSUME that P_a could be 1 and the NUM_STATES
-# would be len(episode) because each state is a unique state, right?
 def compute_state_visition_freq(P_a, gamma, trajs, policy, deterministic=True):
   """compute the expected states visition frequency p(s| theta, T) 
   using dynamic programming
@@ -64,7 +62,6 @@ def compute_state_visition_freq(P_a, gamma, trajs, policy, deterministic=True):
   p = np.sum(mu, 1)
   return p
 
-# TODO: This is fucked up and we can't just index an array by a 96x96 matrix...
 def demo_svf(trajs, n_states):
   """
   compute state visitation frequences from demonstrations
@@ -82,9 +79,6 @@ def demo_svf(trajs, n_states):
   p = p/len(trajs)
   return p
 
-# Todo: Also fucked up because I don't have P_a... Can we get this from Gym?
-# Gym should have everything defined about an MDP
-# Perhaps we just make P_a = 1 or P_a = 0.9 to create noise?
 def deep_maxent_irl(feat_map, P_a, gamma, trajs, lr, n_iters):
   """
   Maximum Entropy Inverse Reinforcement Learning (Maxent IRL)
